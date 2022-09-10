@@ -11,6 +11,7 @@
   --light-txt-cl-60: rgba(255, 255, 255, 0.6);
   --accent-txt-cl: #2196f3;
   --socials-ln-cl: #afb1b8;
+
   /* background colors */
   --baner-cl: #c4c4c4;
   --baner-gr-cl: rgba(47, 48, 58, 0.4);
@@ -22,6 +23,12 @@
   --line-cl: #ececec;
   --portfolio-br-cl: #eeeeee;
   --socials-bg-cl: rgba(255, 255, 255, 0.1);
+  --bg-backdrop-cl: rgba(0, 0, 0, 0.2);
+
+  /* бордер*/
+  --br-modal-cl: rgba(0, 0, 0, 0.1);
+  /*анімація*/
+  --animation: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -105,6 +112,8 @@ img {
   padding-bottom: 32px;
 
   color: inherit;
+
+  transition: color var(--animation);
 }
 .header-link:hover,
 .header-link:focus,
@@ -114,7 +123,20 @@ img {
 }
 
 .current {
+  position: relative;
+
   color: var(--accent-cl);
+}
+.current::after {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  content: "";
+  display: block;
+  width: 100%;
+  height: 4px;
+  background-color: var(--accent-txt-cl);
 }
 
 .contacts-list {
@@ -184,12 +206,75 @@ img {
   letter-spacing: 0.06em;
   background: var(--accent-cl);
   color: var(--light-txt-cl);
+
+  transition: background-color var(--animation);
 }
 
 .hero-btn:hover,
 .hero-btn:focus {
   background-color: var(--accent-act-cl);
 }
+/* модалка */
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-backdrop-cl);
+
+  opacity: 1;
+
+  transition: visibility 500ms var(--animation), opacity 400ms var(--animation);
+}
+
+.backdrop.is-hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+}
+
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(0.5);
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  min-width: 528px;
+  min-height: 581px;
+
+  background-color: var(--light-bc-cl);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--br-modal-cl);
+  border-radius: 4px;
+
+  transform: translate(-50%, -50%) scale(1);
+  transition: transform 500ms var(--animation);
+}
+.close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: 30px;
+  height: 30px;
+  padding: 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--light-bc-cl);
+  border: 1px solid var(--br-modal-cl);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
 /* особливості */
 
 .section {
@@ -243,8 +328,29 @@ img {
 }
 
 /* чим ми займаємося */
-.gallery {
+.benefits {
   padding-top: 0;
+}
+.benefits .list-item {
+  position: relative;
+}
+.benefits-title {
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 70px;
+
+  background: rgba(47, 48, 58, 0.8);
+
+  line-height: calc(16 / 14);
+  text-transform: uppercase;
+
+  color: var(--light-txt-cl);
 }
 
 .section-title {
@@ -300,6 +406,8 @@ img {
   background-color: var(--light-bc-cl);
   color: var(--socials-ln-cl);
   border-radius: 50%;
+
+  transition: background-color var(--animation), color var(--animation);
 }
 
 .socials-link:hover,
@@ -327,12 +435,14 @@ img {
   border: 1px solid var(--socials-ln-cl);
   border-radius: 4px;
   color: var(--socials-ln-cl);
+
+  transition: color var(--animation), border-color var(--animation);
 }
 
 .clients-link:hover,
 .clients-link:focus {
-  border-color: var(--accent-txt-cl);
   color: var(--accent-txt-cl);
+  border-color: var(--accent-txt-cl);
 }
 .clients-icon {
   fill: currentColor;
@@ -363,7 +473,9 @@ img {
 .footer .list-item:not(:last-child) {
   margin-bottom: 9px;
 }
-
+.footer-link {
+  transition: color var(--animation);
+}
 .footer-logo,
 .footer-link {
   color: var(--light-txt-cl);
@@ -411,11 +523,9 @@ img {
 
   color: var(--primary-txt-cl);
   background-color: var(--section-bc-cl);
-}
-/* кнопка "Усі"*/
-.big {
-  padding-right: 25px;
-  padding-left: 25px;
+
+  transition: color var(--animation), background-color var(--animation),
+    box-shadow var(--animation);
 }
 
 .btn:hover,
@@ -424,6 +534,12 @@ img {
   background-color: var(--accent-cl);
   box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
     0px 2px 2px rgba(0, 0, 0, 0.12);
+}
+
+/* кнопка "Усі"*/
+.big {
+  padding-right: 25px;
+  padding-left: 25px;
 }
 /* галерея проєктів */
 .projects {
@@ -441,11 +557,45 @@ img {
 }
 .gallery-link {
   display: block;
+  transition: transform var(--animation), box-shadow var(--animation);
 }
 .gallery-link:hover {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
 }
+.gallery-link:hover .overlay {
+  transform: translateY(0);
+}
+
+.project-thumb {
+  position: relative;
+  overflow: hidden;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px;
+
+  background-color: rgba(33, 150, 243, 0.9);
+
+  transform: translateY(100%);
+  transition: transform var(--animation);
+}
+.project-desk {
+  font-size: 18px;
+  line-height: calc(28 / 18);
+
+  color: var(--light-txt-cl);
+}
+
 .project-title {
   margin-bottom: 4px;
   font-size: 18px;
